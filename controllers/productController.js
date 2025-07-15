@@ -2,13 +2,21 @@ import Product from "../models/product.js";
 
 export function getProduct(req, res){
 	//read and get all the students information from the mongoDB database
+	const name =req.parms.name;
     
-	Product.find()
+	Product.find({name : name})
 		.then((data) => {
-			console.log(data);
-			res.json(data);
+			res.json({
+				list: data
+			})
 		})
-		.catch(() => {});
+		.catch(
+			() => {
+				res.json({
+				message : "Error"
+			})
+		}
+		);
 }
 
 export function createProdcut(req, res){
@@ -22,12 +30,12 @@ export function createProdcut(req, res){
 		.save()
 		.then(() => {
 			res.json({
-				message: "Student created successfully",
+				message: "Product created successfully",
 			});
 		})
 		.catch(() => {
 			res.json({
-				message: "Failed to create student",
+				message: "Failed to create Product",
 			});
 		});
 }
