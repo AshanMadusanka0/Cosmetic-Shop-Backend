@@ -27,7 +27,7 @@ app.use("/students",studentRouter)
 app.use("/products",productRouter)
 app.use("/users",userRouter)
 
-app.listen(6000, 
+app.listen(5500, 
     ()=>{
         console.log("Server is started")
         console.log("Thank you")
