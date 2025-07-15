@@ -1,12 +1,18 @@
 import User from "../models/user.js";
+import bycrypt from "bcrypt";
 
 
 export function createUser(req, res){
 
-    const user =new User(req.body)
+  //passwowrd hashing code
+  const newUserData= req.body
+  newUserData.password = bycrypt.hashSync(newUserData.password,10)  //password hashing  //10 is the solting value,
+
+    const user =new User(newUserData) //passwowrd hashing code 
 
     user.save().then(()=>{
       res.json({
+        
         message: "User created"
       })
 
@@ -16,3 +22,33 @@ export function createUser(req, res){
         })
     })
 }
+
+//email and password validate
+
+export function loginUser(req,res){
+   User.find({email: req.body.email}).then(
+    (users)=>{
+    
+    if(users.length == 0){
+      res.json({
+        message: "User not Found"
+      })
+    }else{
+     const user= users[0]
+
+     const isPasswordCorrect= bycrypt.compareSync(req.body.password,user.password)
+
+     if(isPasswordCorrect){
+      res.json({
+        message: "User logged in"
+      })
+     }else{
+      res.json({
+        message: "User not logged in(wrong password)"
+      })
+     }
+    }
+   }
+  )
+}
+//email and password validate
