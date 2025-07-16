@@ -2,9 +2,21 @@ import Product from "../models/product.js";
 
 
 
-export function getProduct(req, res){
+export async function getProduct(req, res){
+
+	try{
+	const productlist = await Product.find()
+
+	res.json({
+		list: productlist
+	})
+}catch(e){
+	res.json({
+		message:"Error"
+	})
+}
 	//read and get all the students information from the mongoDB database
-    
+    /*
 	Product.find()
 		.then((data) => {
 				res.json({
@@ -18,7 +30,10 @@ export function getProduct(req, res){
 				message : "Products Error "
 			})
 		}
-		);
+		); */
+
+
+		//use the "async-awit" for this(we can use the async await not to "then" "catch")
 }
 
 export function getProductByName(req, res){

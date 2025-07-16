@@ -4,6 +4,8 @@ import studentRouter from "./routes/studentsRouter.js";
 import productRouter from "./routes/productsRouter.js";
 import userRouter from "./routes/userRouter.js";
 import jwt from "jsonwebtoken"; 
+import dotenv from "dotenv";       //connect the mongo db url from env file
+dotenv.config()      //connect the mongo db url from env file
 
 const app = express()
 
@@ -36,7 +38,7 @@ app.use(
 //
 
 
-const connectionString = "mongodb+srv://admin:Ashan73646717@cluster0.szalslh.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
+const connectionString = process.env.MONGO_DB_URI   //connect the mongo db url from env file
 
 
 mongoose.connect(connectionString).then(
