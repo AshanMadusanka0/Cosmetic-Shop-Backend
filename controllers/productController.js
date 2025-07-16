@@ -51,6 +51,24 @@ export function getProductByName(req, res){
 }
 
 export function createProdcut(req, res){
+
+    console.log(req.user)
+  //user Authentication
+	if(req.user ==null){
+		res.json({
+			message : "You are not Logged In"
+		})
+		return
+	}
+
+	if(req.user.type !="admin"){
+		res.json({
+			message : "You are not an admin"
+		})
+		return  
+	}
+//user authentication
+
 	const product = new Product({
 		name: req.body.name,
 		weight: req.body.weight,

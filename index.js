@@ -1,9 +1,9 @@
 import express from "express";
-import mongoose, { Error } from "mongoose";
+import mongoose from "mongoose";
 import studentRouter from "./routes/studentsRouter.js";
 import productRouter from "./routes/productsRouter.js";
 import userRouter from "./routes/userRouter.js";
-import jwt, { decode } from "jsonwebtoken"; 
+import jwt from "jsonwebtoken"; 
 
 const app = express()
 
@@ -11,23 +11,28 @@ app.use(express.json())
 
 //
 app.use(
-    (req,res,next)=>{
-    const token= req.header("Authorization")?.replace("Bearer","")
-    console.log(token)
+    (req,res,next)=>{  //function assign to next not a value
 
-    if(token !=null) {
-        jwt.verify(token, "cbc-secret-key-7973",(error,
-            decoded)=>{
-             if(!error)  {
-                console.log(decoded)
-             } 
-            })
-    }
+      const token = req.header("Authorization")?.replace("Bearer","") //read the token gettiong on header
+      console.log(token)
 
-        
+      if(token != null){
+        jwt.verify(token,"cbc-secret-key-7973" ,(error,
+         decoded)=>{
+           if(!error){
+            //console.log(decoded)
+            req.user = decoded
+           }
+         })  
+       
+      }
+
+      next()
     }
-    
 )
+
+
+
 //
 
 
@@ -38,15 +43,9 @@ mongoose.connect(connectionString).then(
     ()=>{
         console.log("Database connected")
     }
-).catch(
-    ()=>{
-        console.log("Database connection failed")
-    }
-
-
-     
-)
-
+).catch(()=>{
+    console.log("Data base not connected")
+})
 
 
 app.use("/students",studentRouter)
