@@ -1,6 +1,8 @@
 import User from "../models/user.js";
 import bycrypt from "bcrypt";
 import jwt from "jsonwebtoken";       //import jwt data validation library on contraller file
+import dotenv from "dotenv";       //connect the mongo db url from env file
+dotenv.config()                    //connected db config from db 
 
 
 export function createUser(req, res){
@@ -50,7 +52,7 @@ export function loginUser(req,res){
         isBlocked : user.isBlocked,
         type: user.type,
         profilePicture: user.profilePicture
-      }, "cbc-secret-key-7973") 
+      }, process.env.SECRET) 
       
       res.json({
         message: "user loged In",
