@@ -1,5 +1,6 @@
 import User from "../models/user.js";
 import bycrypt from "bcrypt";
+import jwt from "jsonwebtoken";       //import jwt data validation library on contraller file
 
 
 export function createUser(req, res){
@@ -23,7 +24,7 @@ export function createUser(req, res){
     })
 }
 
-//email and password validate
+//email and password confirmation
 
 export function loginUser(req,res){
    User.find({email: req.body.email}).then(
@@ -39,9 +40,27 @@ export function loginUser(req,res){
      const isPasswordCorrect= bycrypt.compareSync(req.body.password,user.password)
 
      if(isPasswordCorrect){
+
+      //add the code for validation(create by the token)
+       
+      const token= jwt.sign({
+        email: user.email,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        isBlocked : user.isBlocked,
+        type: user.type,
+        profilePicture: user.profilePicture
+      }, "cbc-secret-key-7973") 
+      
       res.json({
-        message: "User logged in"
+        message: "user loged In",
+        token:token
       })
+   
+      //add the code for validation(create by the token)
+
+      
+      
      }else{
       res.json({
         message: "User not logged in(wrong password)"
@@ -51,4 +70,4 @@ export function loginUser(req,res){
    }
   )
 }
-//email and password validate
+//email and password confirmation
