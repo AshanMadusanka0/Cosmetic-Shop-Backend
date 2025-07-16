@@ -2,7 +2,7 @@ import User from "../models/user.js";
 import bycrypt from "bcrypt";
 import jwt from "jsonwebtoken";       //import jwt data validation library on contraller file
 import dotenv from "dotenv";       //connect the mongo db url from env file
-dotenv.config()                    //connected db config from db 
+dotenv.config()                  //connected db config from data base
 
 
 export function createUser(req, res){
