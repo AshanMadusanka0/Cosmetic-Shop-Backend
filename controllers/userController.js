@@ -56,7 +56,17 @@ export function loginUser(req,res){
       
       res.json({
         message: "user loged In",
-        token:token
+        token:token,
+        /// send the details for frontend
+        user : {
+          firstName : user.firstName,
+          lastName : user.lastName,
+          email : user.email,
+          profilePicture : user.profilePicture,
+          role :user.role
+
+        }
+         /// send the details for frontend
       })
    
       //add the code for validation(create by the token)
