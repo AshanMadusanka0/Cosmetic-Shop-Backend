@@ -110,7 +110,7 @@ export function createProdcut(req, res){
 
 export function deleteProduct(req,res){
 	
-	Product.deleteOne ({name: req.params.name})
+	Product.deleteOne ({productID: req.params.productID})
         .then(() => {
 			res.json({
 				message: "Product deleted successfully",

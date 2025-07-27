@@ -12,7 +12,7 @@ productRouter.get("/:name",getProductByName);
 
 productRouter.post("/", createProdcut);
 
-productRouter.delete("/:name", deleteProduct);
+productRouter.delete("/:productId", deleteProduct);
 
 
 export default productRouter;
