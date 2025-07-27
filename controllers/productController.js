@@ -16,21 +16,21 @@ export async function getProduct(req, res){
 	})
 }
 	//read and get all the students information from the mongoDB database
-    /*
-	Product.find()
-		.then((data) => {
-				res.json({
-				list: data
-			})
-			})
+    
+	// Product.find()
+	// 	.then((data) => {
+	// 			res.json({
+	// 			list: data
+	// 		})
+	// 		})
 
-		.catch(
-			() => {
-				res.json({
-				message : "Products Error "
-			})
-		}
-		); */
+	// 	.catch(
+	// 		() => {
+	// 			res.json({
+	// 			message : "Products Error "
+	// 		})
+	// 	}
+	// 	); 
 
 
 		//use the "async-awit" for this(we can use the async await not to "then" "catch")
@@ -76,18 +76,22 @@ export function createProdcut(req, res){
 		return
 	}
 
-	if(req.user.type !="admin"){
+	if(req.user.role !="admin"){
 		res.json({
-			message : "You are not an admin"
+			message : "You are  an admin"
 		})
-		return  
+		return 
 	}
 //user authentication
 
 	const product = new Product({
+		productID:req.body.productID,
 		name: req.body.name,
 		weight: req.body.weight,
 		price: req.body.price,
+		alternativeNames:req.body.alternativeNames,
+		imageUrl:req.body.imageUrl,
+		description:req.body.description
 	});
 
 	product
@@ -98,7 +102,7 @@ export function createProdcut(req, res){
 			});
 		})
 		.catch(() => {
-			res.json({
+			res.Status(403).json({
 				message: "Failed to create Product",
 			});
 		});
